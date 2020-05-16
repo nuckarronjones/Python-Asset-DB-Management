@@ -19,10 +19,8 @@ columnNames =['ID', #hardcoded column names. FIX
   'Acquired Date',
   'Asset ID',
   'LastLocUpdate']
-  
-branch = '9Mile 1st'
 
-def getTable():
+def getTable(branch = 'NAS'):
   conn = pyodbc.connect('Driver={SQL Server};'
                       'server=HOMESERVER;'
                       'Database=AssetDatabase;'
@@ -58,6 +56,4 @@ def getTable():
 
   for row in cursor:
       results.append(list(row)) #convert tuple result into an array
-
-  print(results)
 

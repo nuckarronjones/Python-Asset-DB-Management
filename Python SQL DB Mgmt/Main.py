@@ -29,9 +29,9 @@ def branchFilter():
 
     reload(SQLTable)
 
-    SQLTable.branch = request.form['branchname']
+    branch = request.form['branchname']
 
-    SQLTable.getTable()
+    SQLTable.getTable(branch)
 
     print('\n BRANCH NAME IS ')
 
@@ -40,6 +40,18 @@ def branchFilter():
         columns = SQLTable.columnNames, 
         zip=zip, #zip is used to analyze both column and row names at once
         droplist = GetBranchNames.branches)
+
+# @app.route('/home/branchFilter')
+# def test():
+#     reload(SQLTable)
+
+#     SQLTable.getTable('Robertsdale')
+
+#     return render_template(
+#         'home.html',query = SQLTable.results,
+#         columns = SQLTable.columnNames, 
+#         zip=zip, #zip is used to analyze both column and row names at once
+#         droplist = GetBranchNames.branches)
     
 @app.route('/edit',methods=['POST'])#POST REQUEST TABLE CHANGE
 def takePost():
@@ -52,8 +64,12 @@ def takePost():
 
     SQLEditTable.changeDB(SQLEditTable.item,SQLEditTable.rowid)
 
+    #importlib.reload(SQLTable) #reload results if any changes have occured
+
     print("POSTED FIELD CHANGE")
 
-    #reload(SQLTable)
+    reload(SQLTable)
+
+    SQLTable.getTable(branch)
 
     return "success"
