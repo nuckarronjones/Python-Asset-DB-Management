@@ -20,7 +20,9 @@ columnNames =['ID', #hardcoded column names. FIX
   'Asset ID',
   'LastLocUpdate']
 
-def getTable(branch = 'NAS'):
+branch = '9mile 1st'
+
+def getTable():
   conn = pyodbc.connect('Driver={SQL Server};'
                       'server=HOMESERVER;'
                       'Database=AssetDatabase;'

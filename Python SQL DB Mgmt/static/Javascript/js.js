@@ -34,7 +34,6 @@ $('#sudoFormDropDown').on('submit',(e)=>{//dropdown branch filter  post req
 		type: 'POST',
 		url: '/home',
 	}).done(()=>{
-		//$("#mainTable").load(location.href +' #mainTable')
 		location.reload(true);
 	})
 
@@ -42,7 +41,13 @@ $('#sudoFormDropDown').on('submit',(e)=>{//dropdown branch filter  post req
 
 //////TOP PORTION FUNCTIONALITY//////
 
-$("#branches").change(()=>{
+$("#searchbox").on("keypress", function(e){
+	if((!$(this).is('[readonly]') && e.which == 13)){
+		alert("keypress")
+	}
+})
+
+$("#branches").change(()=>{//branch dropdown menu
 	branch = $("#branches option:selected").val();
 	$('form#sudoFormDropDown').submit();
 })
@@ -83,7 +88,7 @@ $('#changeTd').click((e)=>{
 
             $(this).addClass("changed");
 
-            {//form submitting, data
+            {	//form submitting, data
             	/////ajax values reference///
             	//value: queriesToBeExcecuted,
 				//id: thisid,

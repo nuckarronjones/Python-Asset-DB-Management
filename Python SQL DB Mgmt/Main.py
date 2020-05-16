@@ -31,7 +31,9 @@ def branchFilter():
 
     branch = request.form['branchname']
 
-    SQLTable.getTable(branch)
+    SQLTable.branch = branch
+
+    SQLTable.getTable()
 
     print('\n BRANCH NAME IS ')
 
