@@ -1,0 +1,16 @@
+*********************************FUNCTIONALITY*********************************
+*******************************************************************************
+-sticky menu to have 'submit changes' button always visible on top
+-need to have branches (maybe in text file, so they can be edited with admin control)
+	-Branches can be pulled and placed onto the top of the page
+-Pasting in text control
+-Add html date popup for date selection? Also, how to submit this to the backend
+
+*********************************LATER*****************************************
+*******************************************************************************
+-Python control center (admin 'portal')? Make changes that affect application
+	-password protect admin center?
+	-Adding and removing branches
+	-Changing the columns displayed
+	-Adding in Columns
+	

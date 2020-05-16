@@ -1,0 +1,93 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<title>Asset Database</title>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+  <div id="loadingContainer">
+    <div id="loadingScreen"></div>
+    <div id="frontDiv"><img id="loadingIcon" src="static/styles/loading.png"></div>
+  </div>
+
+  <div id='wrapper'>
+
+
+    <div id='containerTop'><!--container for top portion of web app -->
+
+        <div id="heading">
+            <h1>Asset Database</h1>
+            <small>Created by Nicholas Jones</small>
+        </div>
+
+        <div id="buttonContainer">
+
+            <a href="#" id="changeTd" class="myButton spaceRight">Edit</a>
+            <div id="mainSearch" class="spaceRight"><input type="text" name="mainsearch" class="searchbox" placeholder="Search"></div>
+
+            <form id="sudoFormDropDown">
+              <div id="dropDownlist">
+
+                  <label for="cars">Filter by Branch:</label>
+                  <select id="branches">
+                    
+                      {%for item in droplist%}
+                        <option value="{{item}}" id="formItem">{{item}}</option>
+                      {%endfor%}
+
+                  </select>
+
+              </div>
+            </form>
+
+        </div>        
+
+    </div>
+
+    <div id='containerBottom'>
+      <form id="sudoForm">
+      <div id="tableContainer">
+        <table style="width:100%" id="mainTable">
+
+          <tr>
+            <!--Dynamically generate column names -->
+            {%for col in columns%}
+
+              <th>{{col}}{{text}}</th>
+
+            {%endfor%}
+          </tr>
+
+            <!--generate table rows based upon query results -->
+          {%for row in query%}
+
+              <tr id="{{row[0]}}">
+                  <!--combine column and row arrays. Identification to see what values are changed and what to query in DB-->
+                  {%for item,col in zip(row,columns)%}
+
+                    <td id='{{col}}' class='tableItem'><input class="tdItem tdInput" value="{{item}}" readonly></td>
+
+                  {%endfor%}
+
+              </tr>
+
+          {%endfor%}
+
+        </table>
+      </div>
+      </form>
+    </div>
+
+  </div>
+
+</body>
+
+<script src="{{url_for('static', filename='javascript/js.js')}}"></script>
+
+</html>
