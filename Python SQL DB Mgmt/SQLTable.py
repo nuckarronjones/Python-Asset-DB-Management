@@ -54,6 +54,8 @@ def getTable():
 
   cursor.execute(command)
 
+  del results[:]#deletes pervious array values. ensures to avoid duplicates
+
   #columnNames = [column[0] for column in cursor.description] #get names of columns to add in webapp
 
   for row in cursor:

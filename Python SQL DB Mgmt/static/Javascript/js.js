@@ -7,7 +7,6 @@ $('#loadingContainer').css('display','none')//goes away once document loads
 //////POST REQUESTS //////
 $('#sudoForm').on('submit',(e)=>{//Change table item post req
 
-	alert("POST REQUEST")
 	$.ajax({
 		data:{
 			value: queriesToBeExcecuted,
@@ -41,9 +40,47 @@ $('#sudoFormDropDown').on('submit',(e)=>{//dropdown branch filter  post req
 
 //////TOP PORTION FUNCTIONALITY//////
 
-$("#searchbox").on("keypress", function(e){
-	if((!$(this).is('[readonly]') && e.which == 13)){
-		alert("keypress")
+$("#searchbox").on("keypress", function(e){//searchbar row filtering
+
+	if((!$(this).is('[readonly]') && e.which == 13)){//13 = enter key
+
+		let searchVal = $(this).val().toUpperCase()//word typed in search bar
+
+		if (searchVal === ''){//if the search is empty, just reload table
+			location.reload(true)
+		}
+
+		let columnLength = $('th').length//get length of columns. Example, 16 columns exist right now
+
+		let count = 1//the count keeps track of how many columns exist, and when a new row is being analyzed
+
+		let matchedWord = false
+
+		$('#mainTable tr td').each((i,row)=>{
+			//row = each td
+			//td child consists of the 'input' with the value to be compared against
+			//$(row).children().val() = actual value to be compared
+			//$(row).parent() = actual table row
+
+			let dataEntry = $(row).children().val().toUpperCase()
+
+			if(dataEntry.indexOf(searchVal) != -1){//locate if searchval exists in searchval
+				matchedWord = true//a match was found
+			}
+
+			count++
+
+			if(count > columnLength){//16
+				if (matchedWord == false){
+					$(row).parent().fadeOut('slow')//hide parent if no previous matches were found
+				}
+				count = 1//reset count
+				matchedWord = false//reset value
+			}
+
+
+		})
+
 	}
 })
 

@@ -1,3 +1,4 @@
+#############################################################
 #FIX: Come back to later. Temporary fix
 #DEBUG: remove as soon as possible. Quick testing
 #############################################################
@@ -24,7 +25,7 @@ def result():
     	zip=zip, #zip is used to analyze both column and row names at once
         droplist = GetBranchNames.branches)
 
-@app.route('/home',methods=['POST'])#POST REQUEST DROPDOWN MENU
+@app.route('/home',methods=['POST'])#POST REQUEST DROPDOWN MENU #REFRESH COMPLETED BY AJAX
 def branchFilter():
 
     reload(SQLTable)
@@ -35,13 +36,7 @@ def branchFilter():
 
     SQLTable.getTable()
 
-    print('\n BRANCH NAME IS ')
-
-    return render_template(
-        'home.html',query = SQLTable.results,
-        columns = SQLTable.columnNames, 
-        zip=zip, #zip is used to analyze both column and row names at once
-        droplist = GetBranchNames.branches)
+    return ('', 204)
 
 # @app.route('/home/branchFilter')
 # def test():
@@ -72,6 +67,6 @@ def takePost():
 
     reload(SQLTable)
 
-    SQLTable.getTable(branch)
+    SQLTable.getTable()
 
     return "success"
