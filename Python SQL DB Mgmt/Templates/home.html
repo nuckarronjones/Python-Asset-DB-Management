@@ -28,6 +28,13 @@ CREATOR: NICHOLAS JONES
   integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+
+  <!-- cheaty way of passing elements from flask to javascript TESTING-->
+  <script type="text/javascript">
+    let sqlTableResults = `{{query}}`
+  </script>
+
 </head>
 <body>
 
@@ -42,13 +49,15 @@ CREATOR: NICHOLAS JONES
     <div id='containerTop'><!--container for top portion of web app -->
 
         <div id="heading">
+            <img id="DBIcon" src="static/styles/DBlogo.png">
             <h1>Asset Database</h1>
-            <small>Created by Nicholas Jones</small>
         </div>
 
         <div id="buttonContainer">
 
-            <a href="#" id="changeTd" class="myButton spaceRight">Edit</a>
+            <a href="#" id="changeTd" class="myButtonNeutral spaceRight editButtons">Edit</a>
+            <a href="#" id="addRow" class="myButtonGood spaceRight editButtons">Add</a>
+            <a href="#" id="delRow" class="myButtonDanger spaceRight editButtons">Delete</a>
             <div id="mainSearch" class="spaceRight"><input type="text" name="mainsearch" id="searchbox" placeholder="Search"></div>
 
             <form id="sudoFormDropDown">
@@ -67,15 +76,18 @@ CREATOR: NICHOLAS JONES
               </div>
             </form>
 
-        </div>        
+        </div>
+        <br>       
 
     </div>
 
     <div id='containerBottom'>
-      <form id="sudoForm">
-      <div id="tableContainer">
-        <table style="width:100%" id="mainTable">
 
+      <form id="sudoForm">
+
+        <table id="mainTable">
+
+        <thead>
           <tr id="mainColumnHeaders">
             <!--Dynamically generate column names -->
             {%for col in columns%}
@@ -84,7 +96,9 @@ CREATOR: NICHOLAS JONES
 
             {%endfor%}
           </tr>
+        </thead>
 
+        <tbody>
             <!--generate table rows based upon query results -->
           {%for row in query%}
 
@@ -100,8 +114,10 @@ CREATOR: NICHOLAS JONES
 
           {%endfor%}
 
+        </tbody>
+
         </table>
-      </div>
+
       </form>
     </div>
 

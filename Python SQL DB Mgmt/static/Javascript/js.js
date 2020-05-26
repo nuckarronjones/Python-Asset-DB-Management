@@ -1,11 +1,18 @@
+let columnLength = $('th').length//get length of columns. Example, 16 columns exist right now
 
 $( document ).ready(function() {
+
+//testing
+let x = sqlTableResults.split('&#39;')
+
+console.log(x)
 
 //////LOADING SCREEN//////
 $('#loadingContainer').css('display','none')//goes away once document loads
 
 //////POST REQUESTS //////
 $('#sudoForm').on('submit',(e)=>{//Change table item post req
+	e.preventDefault();
 
 	$.ajax({
 		data:{
@@ -19,8 +26,6 @@ $('#sudoForm').on('submit',(e)=>{//Change table item post req
 	}).done(()=>{
 		console.log(queriesToBeExcecuted + '\n' + thisid + "\n" + thiscolumn)
 	})
-
-	e.preventDefault();
 })
 
 $('#sudoFormDropDown').on('submit',(e)=>{//dropdown branch filter  post req
@@ -38,6 +43,29 @@ $('#sudoFormDropDown').on('submit',(e)=>{//dropdown branch filter  post req
 
 })
 
+$('#delRow').on('click',(e)=>{//delete row button. Must have highlighted row active
+	e.preventDefault();
+
+	let idnumber = $('.highlight').attr('id')
+
+	if(idnumber === undefined){//this means that no row is highlighted
+		alert("Please highlight a row you wish to delete, then click the delete button")
+	}else{
+		$.ajax({
+			data:{
+				idnum: idnumber
+			},
+			type: 'POST',
+			url: '/deleteRow',
+		}).done(()=>{
+		location.reload(true);
+	})
+	$('.highlight').fadeOut('slow')
+	}
+
+})
+
+
 //////TOP PORTION FUNCTIONALITY//////
 
 $("#searchbox").on("keypress", function(e){//searchbar row filtering
@@ -49,8 +77,6 @@ $("#searchbox").on("keypress", function(e){//searchbar row filtering
 		if (searchVal === ''){//if the search is empty, just reload table
 			location.reload(true)
 		}
-
-		let columnLength = $('th').length//get length of columns. Example, 16 columns exist right now
 
 		let count = 1//the count keeps track of how many columns exist, and when a new row is being analyzed
 
@@ -64,14 +90,14 @@ $("#searchbox").on("keypress", function(e){//searchbar row filtering
 
 			let dataEntry = $(row).children().val().toUpperCase()
 
-			if(dataEntry.indexOf(searchVal) != -1){//locate if searchval exists in searchval
+			if(dataEntry.indexOf(searchVal) != -1){//locate if dataEntry exists in searchval
 				matchedWord = true//a match was found
 			}
 
 			count++
 
 			if(count > columnLength){//16
-				if (matchedWord == false){
+				if (matchedWord == false){//no matches were found in the row
 					$(row).parent().fadeOut('slow')//hide parent if no previous matches were found
 				}
 				count = 1//reset count

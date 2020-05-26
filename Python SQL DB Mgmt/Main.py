@@ -37,18 +37,6 @@ def branchFilter():
     SQLTable.getTable()
 
     return ('', 204)
-
-# @app.route('/home/branchFilter')
-# def test():
-#     reload(SQLTable)
-
-#     SQLTable.getTable('Robertsdale')
-
-#     return render_template(
-#         'home.html',query = SQLTable.results,
-#         columns = SQLTable.columnNames, 
-#         zip=zip, #zip is used to analyze both column and row names at once
-#         droplist = GetBranchNames.branches)
     
 @app.route('/edit',methods=['POST'])#POST REQUEST TABLE CHANGE
 def takePost():
@@ -69,4 +57,11 @@ def takePost():
 
     SQLTable.getTable()
 
-    return "success"
+    return ('', 204)
+
+@app.route('/deleteRow',methods=['POST'])#DELETE ROW WITH ATTRIBUTE 'HIGHLIGHTED'
+def deleteRow():
+
+    SQLTable.deleteRow(request.form['idnum'])
+
+    return ('', 204)

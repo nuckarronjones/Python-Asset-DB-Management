@@ -2,8 +2,14 @@
 
 import pyodbc 
 ###################################################################
+conn = pyodbc.connect('Driver={SQL Server};'
+                      'server=HOMESERVER;'
+                      'Database=AssetDatabase;'
+                      'Trusted_Connection=yes;')
+cursor = conn.cursor()
+
 results = []
-columnNames =['ID', #hardcoded column names. FIX
+columnNames =['ID', #hardcoded column names. FIX. Needs to be dynamic #columnNames = [column[0] for column in cursor.description] #get names of columns to add in webapp
   'Department',
   'IP Address',
   'Category',
@@ -23,12 +29,6 @@ columnNames =['ID', #hardcoded column names. FIX
 branch = '9mile 1st'
 
 def getTable():
-  conn = pyodbc.connect('Driver={SQL Server};'
-                      'server=HOMESERVER;'
-                      'Database=AssetDatabase;'
-                      'Trusted_Connection=yes;')
-
-  cursor = conn.cursor()
 
   branchFilter = "WHERE Location LIKE '{}'".format(branch)
 
@@ -61,3 +61,11 @@ def getTable():
   for row in cursor:
       results.append(list(row)) #convert tuple result into an array
 
+  cursor.commit()
+
+def deleteRow(idnumber):
+  command = """DELETE FROM [AssetDatabase].[dbo].[Assets] WHERE ID={};""".format(idnumber)
+  cursor.execute(command)
+  cursor.commit()
+
+  print('ROW WITH ID NUMBER ' + idnumber + " HAS BEEN DELETED")

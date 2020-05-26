@@ -2,6 +2,11 @@
 .spaceRight{
 	margin-right:10px;
 }
+.editButtons:hover{
+	opacity:  100%;
+	transform: scale(1.05);
+}
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);
@@ -18,9 +23,10 @@
 .highlight{/*when row is clicked, highlights row*/
 	background-color: #ace5fa !important;
 }
-.myButton {
-	box-shadow:inset 0px -3px 7px 0px #29bbff;
-	background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+.myButtonNeutral {
+	opacity:  50%;
+	box-shadow:inset 0px -3px 7px 0px #0091ff;
+	background:linear-gradient(to bottom, lightblue 5%, #0091ff 100%);
 	background-color:#2dabf9;
 	border-radius:3px;
 	border:1px solid #0b0e07;
@@ -33,6 +39,39 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #263666;
 }
+.myButtonGood{
+	opacity:  50%;
+	box-shadow:inset 0px -3px 7px 0px green;
+	background:linear-gradient(to bottom, lightgreen 5%, green 100%);
+	background-color:#2dabf9;
+	border-radius:3px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;	
+}
+.myButtonDanger{
+	opacity:  50%;
+	box-shadow:inset 0px -3px 7px 0px red;
+	background:linear-gradient(to bottom, pink 5%, red 100%);
+	background-color:#2dabf9;
+	border-radius:3px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+
 .myButton:hover {
 	background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
 	background-color:#0688fa;
@@ -75,7 +114,7 @@
 
 body{
 	z-index: 1;
-	font-family: arial;
+	font-family: 'Questrial', sans-serif;
 	color:#4f4f4f;
 	background-color:#eee;
 }
@@ -83,29 +122,57 @@ body{
 #wrapper{
 	margin:25px;
 	display:grid;
-	grid-template-rows: 150px minmax(1000px,85vh);
+	grid-template-rows: 150px minmax(1000px,50vh);
 	grid-template-areas:
 	"top"
 	"bottom";
 }
-	#conainerTop{ /*grid area that houses headings and buttons*/
+	#containerTop{ /*grid area that houses headings and buttons*/
 		grid-area: "top";
 		color:black;
 	}
 		#heading{
+			color:black;
+			position: relative;
 			display: grid;
 			justify-content: center;
 			align-content: center;
 			height:auto;
 			text-align: center;
 			padding:20px;
+			letter-spacing: 2px;
+		}
+		#DBIcon{
+			position: absolute;
+			left: 0; 
+	  		right: 0; 
+	  		margin-left: auto; 
+	  		margin-right: auto; 
+	  		width: 75px;height:auto;
+			z-index: -1;
+			-webkit-filter: drop-shadow(1px 1px 0 black)
+            drop-shadow(-1px -1px 0 black);
+  			filter: drop-shadow(1px 1px 0 black) 
+          	drop-shadow(-1px -1px 0 black);
+			filter: invert(48%) sepia(100%) saturate(3207%) hue-rotate(-50deg) brightness(70%) contrast(200%);
 		}
 		#buttonContainer{
 			position: relative;
 			height:auto;width:auto;
-			background-color:cyan;
 		}
+			#buttonContainer a{
+				display: grid;
+				justify-content: center;
+				align-content: center;
+				width:15px;
+			}
 			#changeTd{
+				float:left;
+			}
+			#addRow{
+				float:left;
+			}
+			#delRow{
 				float:left;
 			}
 		#mainSearch{
@@ -124,18 +191,18 @@ body{
 			height:100%;
 		}
 		#dropDownlist{
-			position: absolute;
-			top:0;
-			right:0;
+			float:right;
 		}
 
 	#containerBottom{/*houses table elements */
 		grid-area:"bottom";
 		box-shadow: -5px -5px 10px #b0b0b0;
+		height:100%;
 		overflow: scroll;
 	}
 		table{
-			border-collapse: collapse;
+			table-layout:fixed;
+			border-collapse: collapse;/*collapses borders, conjoins them*/
 		}
 		td{
 			border: 1.5px solid #dedede;
@@ -149,6 +216,7 @@ body{
 		}
 		th{
 			height: 50px;
+			width:100px;
 			color: white;
 			box-shadow:inset 0px -3px 7px 0px #29bbff;
 			background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
