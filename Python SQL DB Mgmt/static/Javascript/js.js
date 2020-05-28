@@ -3,9 +3,9 @@ let columnLength = $('th').length//get length of columns. Example, 16 columns ex
 $( document ).ready(function() {
 
 //testing
-let x = sqlTableResults.split('&#39;')
+//let x = sqlTableResults.replace(/&#39;/g,"\"")
 
-console.log(x)
+//console.log(x)
 
 //////LOADING SCREEN//////
 $('#loadingContainer').css('display','none')//goes away once document loads
@@ -66,9 +66,13 @@ $('#delRow').on('click',(e)=>{//delete row button. Must have highlighted row act
 })
 
 
+
+
+
+
 //////TOP PORTION FUNCTIONALITY//////
 
-$("#searchbox").on("keypress", function(e){//searchbar row filtering
+/*$("#searchbox").on("keypress", function(e){//searchbar row filtering
 
 	if((!$(this).is('[readonly]') && e.which == 13)){//13 = enter key
 
@@ -108,7 +112,45 @@ $("#searchbox").on("keypress", function(e){//searchbar row filtering
 		})
 
 	}
+})*/
+
+console.log(allTable)
+
+$("#searchbox").on("keypress", function(e){//searchbar row filtering
+
+	if((!$(this).is('[readonly]') && e.which == 13)){//13 = enter key
+
+		let searchVal = $(this).val().toUpperCase()//word typed in search bar
+
+		if (searchVal === ''){//if the search is empty, just reload table
+			location.reload(true)
+
+		}else{
+
+			$("tbody").empty();
+
+			for(i=0;i< allTable.length; i++){
+				let rowEntry = `<tr id='${allTable[i][0]}'>`
+				if(allTable[i].join().indexOf(searchVal) != -1){//join that array to search indexof
+
+
+					console.log(allTable[i])//DEBUG
+         			console.log("\n" + allTable[i].join() + "\n")//DEBUG
+         			console.log("\t" + allTable[i].join().indexOf("CDM") + " INDEX")//DEBUG
+
+         			for(j=0;j<allTable[i].length;j++){
+         				rowEntry += `<td id='column' class='tableItem'><input class='tdItem tdInput' value='${allTable[i][j]}' readonly></td>`
+         			}
+
+
+				}
+
+				$("tbody").append(rowEntry + "</tr>")
+			}
+		}
+	}
 })
+
 
 $("#branches").change(()=>{//branch dropdown menu
 	branch = $("#branches option:selected").val();

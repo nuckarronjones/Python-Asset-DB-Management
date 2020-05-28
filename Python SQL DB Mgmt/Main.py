@@ -2,7 +2,7 @@
 #FIX: Come back to later. Temporary fix
 #DEBUG: remove as soon as possible. Quick testing
 #############################################################
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from importlib import reload
 import SQLTable
 import SQLEditTable
@@ -16,6 +16,7 @@ app = Flask(__name__)
 def result():
 
     SQLTable.getTable()
+    SQLTable.getAllRows()
 
     #DEBUG: importlib.reload(SQLTable) #reload results if any changes have occured
 
@@ -23,7 +24,8 @@ def result():
     	'home.html',query = SQLTable.results,
     	columns = SQLTable.columnNames, 
     	zip=zip, #zip is used to analyze both column and row names at once
-        droplist = GetBranchNames.branches)
+        droplist = GetBranchNames.branches,
+        wholeDBArray = SQLTable.allRows)
 
 @app.route('/home',methods=['POST'])#POST REQUEST DROPDOWN MENU #REFRESH COMPLETED BY AJAX
 def branchFilter():

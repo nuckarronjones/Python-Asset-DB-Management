@@ -15,6 +15,5 @@ column = None
 
 ###################################################################
 def changeDB(value,rowid):#DEPARTMENT ISNT REGESTERING BECAUSE IT IS A STRING
-	print("---------------------------------->UPDATED POST FIRED " + str(item) + " " + str(rowid))
 	cursor.execute("UPDATE AssetDatabase.dbo.Assets SET [{}] = ? WHERE ID = ?".format(column),value,rowid)
 	conn.commit()

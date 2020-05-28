@@ -154,6 +154,7 @@ body{
             drop-shadow(-1px -1px 0 black);
   			filter: drop-shadow(1px 1px 0 black) 
           	drop-shadow(-1px -1px 0 black);
+          	opacity: 40%;
 			filter: invert(48%) sepia(100%) saturate(3207%) hue-rotate(-50deg) brightness(70%) contrast(200%);
 		}
 		#buttonContainer{
@@ -200,9 +201,10 @@ body{
 		height:100%;
 		overflow: scroll;
 	}
-		table{
+		#mainTable{
 			table-layout:fixed;
 			border-collapse: collapse;/*collapses borders, conjoins them*/
+			width:100%;
 		}
 		td{
 			border: 1.5px solid #dedede;

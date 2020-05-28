@@ -18,10 +18,11 @@ ______         _                    _   _____                 _  _  _     _   _ 
 CREATOR: NICHOLAS JONES
 -->
 
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Asset Database</title>
+  <meta charset="UTF-8">
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
   <script
   src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -30,9 +31,9 @@ CREATOR: NICHOLAS JONES
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
 
-  <!-- cheaty way of passing elements from flask to javascript TESTING-->
+  <!-- cheaty way of passing array from flask to javascript-->
   <script type="text/javascript">
-    let sqlTableResults = `{{query}}`
+    let allTable = {{wholeDBArray | tojson}}
   </script>
 
 </head>

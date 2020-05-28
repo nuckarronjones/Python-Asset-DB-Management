@@ -9,6 +9,7 @@ conn = pyodbc.connect('Driver={SQL Server};'
 cursor = conn.cursor()
 
 results = []
+allRows = [] #This is used for searching functionality on main page (input box). All items in database are searched 
 columnNames =['ID', #hardcoded column names. FIX. Needs to be dynamic #columnNames = [column[0] for column in cursor.description] #get names of columns to add in webapp
   'Department',
   'IP Address',
@@ -23,7 +24,6 @@ columnNames =['ID', #hardcoded column names. FIX. Needs to be dynamic #columnNam
   'Manufacturer',
   'Model',
   'Acquired Date',
-  'Asset ID',
   'LastLocUpdate']
 
 branch = '9mile 1st'
@@ -47,12 +47,12 @@ def getTable():
         ,[Manufacturer]
         ,[Model]
         ,[Acquired Date]
-        ,[Asset ID]
         ,[LastLocUpdate]
     FROM [AssetDatabase].[dbo].[Assets] {}""".format(branchFilter)
 
 
   cursor.execute(command)
+
 
   del results[:]#deletes pervious array values. ensures to avoid duplicates
 
@@ -62,6 +62,40 @@ def getTable():
       results.append(list(row)) #convert tuple result into an array
 
   cursor.commit()
+
+
+def getAllRows():
+  command = """SELECT 
+    [ID],[Department]
+        ,[IP Address]
+        ,[Category]
+        ,[Service Tag]
+        ,[PTTY]
+        ,[Location]
+        ,[Notes]
+        ,[Retired Date]
+        ,[Warranty End Date]
+        ,[PR]
+        ,[Manufacturer]
+        ,[Model]
+        ,[Acquired Date]
+        ,[LastLocUpdate]
+    FROM [AssetDatabase].[dbo].[Assets]"""
+
+
+  cursor.execute(command)
+
+
+  del allRows[:]#deletes pervious array values. ensures to avoid duplicates
+
+  #columnNames = [column[0] for column in cursor.description] #get names of columns to add in webapp
+
+  for row in cursor:
+      allRows.append(list(row)) #convert tuple result into an array
+
+  cursor.commit()
+
+  print(allRows)
 
 def deleteRow(idnumber):
   command = """DELETE FROM [AssetDatabase].[dbo].[Assets] WHERE ID={};""".format(idnumber)
